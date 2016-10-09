@@ -16,7 +16,7 @@ public class Game {
     public Game() {
         frames = new LinkedList<>();
 
-        for(int i = 0; i < GameStatic.FRAMES; i++) {
+        for(int i = 0; i < GameStatic.INIT_FRAMES_COUNT; i++) {
             frames.add(new Frame());
         }
 
@@ -40,14 +40,14 @@ public class Game {
         return score;
     }
 
-    private void addRoll(Roll newRoll){
+    private void addRoll(Roll newRoll) {
         if(roll == null)
             roll = newRoll;
         else
             roll.addRoll(newRoll);
     }
 
-    private void nextFrameIfDone(){
+    private void nextFrameIfDone() {
         if(currentFrame.isDone())
             currentFrame = frameIterator.next();
     }
