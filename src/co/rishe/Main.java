@@ -9,10 +9,11 @@ public class Main {
     public static void main(String[] args) {
         Game game = new Game();
         try {
-            game.attempt(10);
-            game.attempt(10);
             game.attempt(5);
-            game.attempt(3);
+            game.attempt(5);
+            game.attempt(1);
+            game.attempt(1);
+
 
             System.out.println(game.getScore());
         } catch (InvalidAttributeValueException e) {
