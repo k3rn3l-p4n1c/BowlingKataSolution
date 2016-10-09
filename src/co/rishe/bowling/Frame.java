@@ -1,27 +1,31 @@
 package co.rishe.bowling;
 
 import javax.management.InvalidAttributeValueException;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by Bardia on 10/4/16.
  */
 class Frame {
-    private Roll roll1, roll2;
+    private List<Roll> rolls;
+
+    public Frame() {
+        rolls = new LinkedList<>();
+    }
 
     void attempt(Roll roll) throws InvalidAttributeValueException {
         if(roll.getSpins() > GameStatic.SPINS)
             throw new InvalidAttributeValueException("Invalid number for falling_spins can be more than number of all SPINS");
 
-        if(roll1 == null)
-            roll1 = roll;
-        else if(roll2 == null)
-            roll2 = roll;
+        if(rolls.size() < GameStatic.ROLLS)
+            rolls.add(roll);
         else
             throw new InvalidAttributeValueException("You can have two attempts");
     }
 
     public boolean isStrike() {
-        return roll1 != null && roll1.getSpins() == 10;
+        return rolls.size() >= 1 && rolls.get(0).getSpins() == 10;
     }
 
     public boolean isSpare() {
@@ -29,32 +33,23 @@ class Frame {
     }
 
     public boolean isDone() {
-        return (roll1 != null && roll2 != null)
-                || (roll1.getSpins() == 10 && roll2 == null);
+        return rolls.size() == GameStatic.ROLLS;
     }
 
     public int getSumSpin() {
-        if(roll1 == null)
-            return 0;
-        else if (roll2 == null)
-            return roll1.getSpins();
-        return roll1.getSpins() + roll2.getSpins();
+        int sum = 0;
+        for(Roll roll: rolls)
+            sum += roll.getSpins();
+        return sum;
     }
 
     public int getScore() {
         if(this.isStrike()) {
-            return getSumSpin() + roll1.getNext().getSpins() + roll1.getNext().getNext().getSpins();
+            return getSumSpin() + rolls.get(0).getNext().getSpins() + rolls.get(0).getNext().getNext().getSpins();
         } else if(this.isSpare()) {
-            return getSumSpin() + roll2.getNext().getSpins();
+            return getSumSpin() + rolls.get(rolls.size()-1).getNext().getSpins();
         }
         return getSumSpin();
     }
 
-    public int getRoll1() {
-        return roll1.getSpins();
-    }
-
-    public int getRoll2() {
-        return roll2.getSpins();
-    }
 }

@@ -6,4 +6,5 @@ package co.rishe.bowling;
 class GameStatic {
     static final int SPINS = 10;
     static final int FRAMES = 10;
+    static final int ROLLS = 2;
 }
