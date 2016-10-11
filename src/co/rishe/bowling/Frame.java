@@ -8,7 +8,7 @@ import java.util.List;
  * Created by Bardia on 10/4/16.
  */
 class Frame {
-    private List<Roll> rolls;
+    private LinkedList<Roll> rolls;
 
     public Frame() {
         rolls = new LinkedList<>();
@@ -16,40 +16,40 @@ class Frame {
 
     void attempt(Roll roll) throws InvalidAttributeValueException {
         if (rolls.size() > GameStatic.FRAME_ROLLS_COUNT)
-            throw new InvalidAttributeValueException("You can have two attempts");
+            throw new InvalidAttributeValueException(ErrorMessages.MAX_ROLL_COUNT);
 
         rolls.add(roll);
     }
 
     public boolean isStrike() {
-        return rolls.size() >= 1 && rolls.get(0).getSpins() == GameStatic.MAX_PINS_COUNT;
+        return !rolls.isEmpty() && rolls.get(0).getPins() == GameStatic.MAX_PINS_COUNT;
     }
 
     public boolean isSpare() {
-        return !isStrike() && getSumSpin() == GameStatic.MAX_PINS_COUNT;
+        return !isStrike() && getSumPin() == GameStatic.MAX_PINS_COUNT;
     }
 
     public boolean isDone() {
         return rolls.size() == GameStatic.FRAME_ROLLS_COUNT;
     }
 
-    public int getSumSpin() {
+    public int getSumPin() {
         int sum = 0;
         for(Roll roll: rolls)
-            sum += roll.getSpins();
+            sum += roll.getPins();
         return sum;
     }
 
     public int getScore() {
         if(this.isStrike()) {
-            return getSumSpin()
-                    + oneRollAfter().getSpins()
-                    + twoRollAfter().getSpins();
+            return getSumPin()
+                    + oneRollAfter().getPins()
+                    + twoRollAfter().getPins();
         } else if(this.isSpare()) {
-            return getSumSpin()
-                    + oneRollAfter().getSpins();
+            return getSumPin()
+                    + oneRollAfter().getPins();
         } else {
-            return getSumSpin();
+            return getSumPin();
         }
     }
 

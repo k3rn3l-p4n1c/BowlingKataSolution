@@ -6,14 +6,14 @@ import javax.management.InvalidAttributeValueException;
  * Created by Bardia on 10/4/16.
  */
 class Roll {
-    private int spins;
+    private Integer pins;
     private Roll nextRoll;
 
-    public Roll(int spins) throws InvalidAttributeValueException {
-        if(spins > GameStatic.MAX_PINS_COUNT)
-            throw new InvalidAttributeValueException("Invalid number for falling_spins can be more than number of all MAX_PINS_COUNT");
+    public Roll(Integer pins) throws InvalidAttributeValueException {
+        if(pins > GameStatic.MAX_PINS_COUNT)
+            throw new InvalidAttributeValueException(ErrorMessages.INVALID_PIN_COUNT);
 
-        this.spins = spins;
+        this.pins = pins;
     }
 
     public void addRoll(Roll newRoll) {
@@ -23,8 +23,8 @@ class Roll {
             nextRoll.addRoll(newRoll);
     }
 
-    public int getSpins() {
-        return spins;
+    public int getPins() {
+        return pins;
     }
 
     public Roll getNext() {

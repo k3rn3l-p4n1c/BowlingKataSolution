@@ -24,8 +24,8 @@ public class Game {
         currentFrame = frameIterator.next();
     }
 
-    public void attempt(int falling_spins) throws InvalidAttributeValueException {
-        Roll currentRoll = new Roll(falling_spins);
+    public void attempt(int pins) throws InvalidAttributeValueException {
+        Roll currentRoll = new Roll(pins);
         addRoll(currentRoll);
         currentFrame.attempt(currentRoll);
         nextFrameIfDone();
